@@ -1,6 +1,6 @@
 # G1GC CodeCache Cleanup Issue
 
-This repository demonstrates an issue where G1GC does not correctly clean up the JVM CodeCache, even in emergency situations.
+This repository demonstrates an issue where G1GC does not correctly clean up the JVM CodeCache, even in emergency situations. Possibly related to https://bugs.openjdk.org/browse/JDK-8290025
 
 ## Initial Example
 The first test was performed on `jbrsdk-21.0.3-windows-x64-b446.1`.
