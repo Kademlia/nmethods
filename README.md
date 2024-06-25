@@ -11,6 +11,7 @@ The first test was performed on `jbrsdk-21.0.3-windows-x64-b446.1`.
    - Ensure a working version of `hotswap-agent-core` is added and fix the Maven import. Use version `1.4.2` to avoid warning messages present in `1.4.1`.
 
 2. **Run the Script**
+   - Update `debugG1Failing.bat` or `debugSerialWorking.bat` on Windows, to include the path to a jbrsdk that supports hotswapping and has the hotswap-agent enabled
    - Execute `debugG1Failing.bat` or `debugSerialWorking.bat` on Windows, or similar `.sh` scripts on Unix.
 
 3. **Connect to the Process**
