@@ -3,6 +3,10 @@
 This repository demonstrates an issue where G1GC does not correctly clean up the JVM CodeCache, even in emergency situations. Very likely caused by Caused by JBR-6419 (https://github.com/JetBrains/JetBrainsRuntime/commit/b128bb4b21781f705b5a1ba3b18c468ad806fabf)
 As with that change ClassUnloadingWithConcurrentMark is always false if hotswapping is enabled and thus G1GC will **never** call Class Unloading
 
+
+- The bug **is** happening on on `jbrsdk-21.0.3-windows-x64-b446.1`.
+- The bug **is NOT** happening on `jbrsdk-21.0.2-windows-x64-b346.3.tar`.
+
 **arguments.cpp**
 ```
 [...]
@@ -19,7 +23,6 @@ void Arguments::setup_hotswap_agent() {
 [...]
 ```
 
-
 This can be validated with debug-logs for the GC turned on. And this line never showing up:
 
 **g1ConcurrentMark.cpp**
@@ -30,10 +33,6 @@ This can be validated with debug-logs for the GC turned on. And this line never 
     GCTraceTime(Debug, gc, phases) debug("Class Unloading", _gc_timer_cm);
   [...]
 ```
-
-## Initial Example
-- The bug **is** happening on on `jbrsdk-21.0.3-windows-x64-b446.1`.
-- The bug **is NOT** happening on `jbrsdk-21.0.2-windows-x64-b346.3.tar`.
 
 ## JVM Flags used
 Running G1GC with low codecache size and only one thread to make debug-logs cleaner. Limit memory to force earlier cleanups
@@ -56,7 +55,7 @@ Debug logs & more agressive sweeping
 -Xlog:codecache*=info:stdout:tags,uptime,time,level 
 ```
 
-Additonal flags for Hotswap-Agent 1.4.2, top be working with Java21 (https://github.com/HotswapProjects/HotswapAgent/commit/93ca7bb48ba9793cd542d29e156e11087e384f02)
+Additonal flags for Hotswap-Agent 1.4.2, to be working with Java21 (https://github.com/HotswapProjects/HotswapAgent/commit/93ca7bb48ba9793cd542d29e156e11087e384f02)
 ```plaintext
 -Dblank 
 --add-opens java.base/java.lang=ALL-UNNAMED 
