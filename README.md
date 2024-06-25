@@ -1,11 +1,12 @@
 # G1GC CodeCache Cleanup Issue (JBR DCEVM Bug, JBR-6419)
 
-This repository demonstrates an issue where G1GC does not correctly clean up the JVM CodeCache, even in emergency situations. Very likely caused by Caused by JBR-6419 (https://github.com/JetBrains/JetBrainsRuntime/commit/b128bb4b21781f705b5a1ba3b18c468ad806fabf)
+This repository demonstrates an issue where G1GC does not correctly clean up the JVM CodeCache, even in emergency situations. Very likely caused by Caused by [JBR-6419](https://github.com/JetBrains/JetBrainsRuntime/commit/b128bb4b21781f705b5a1ba3b18c468ad806fabf)
 As with that change ClassUnloadingWithConcurrentMark is always false if hotswapping is enabled and thus G1GC will **never** call Class Unloading
 
 
 - The bug **is** happening on on `jbrsdk-21.0.3-windows-x64-b446.1`.
 - The bug **is NOT** happening on `jbrsdk-21.0.2-windows-x64-b346.3.tar`.
+- Reported as [JBR-7351](https://youtrack.jetbrains.com/issue/JBR-7351/JVM-CodeCache-will-not-be-cleaned-using-G1GC-if-Hotswap-Agent-is-enabled-since-JBR-6419-jbr21.351)
 
 **arguments.cpp**
 ```
