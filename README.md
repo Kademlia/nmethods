@@ -5,6 +5,40 @@ This repository demonstrates an issue where G1GC does not correctly clean up the
 ## Initial Example
 The first test was performed on `jbrsdk-21.0.3-windows-x64-b446.1`.
 
+## JVM Flags used
+Running G1GC with low codecache size and only one thread to make debug-logs cleaner. Limit memory to force earlier cleanups
+```plaintext
+-XX:+UseG1GC 
+-XX:HotswapAgent=core
+-XX:-AllowEnhancedClassRedefinition
+-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=127.0.0.1:31337 
+-Xmx512M
+-XX:ReservedCodeCacheSize=12m 
+-XX:ParallelGCThreads=1 
+-XX:ConcGCThreads=1-XX:-SegmentedCodeCache 
+```
+
+Debug logs & more agressive sweeping
+```plaintext
+-XX:StartAggressiveSweepingAt=30
+-Xlog:gc*,gc+phases=debug 
+-Xlog:codecache*=info:stdout:tags,uptime,time,level 
+```
+
+Additonal flags for Hotswap-Agent 1.4.2, top be working with Java21 (https://github.com/HotswapProjects/HotswapAgent/commit/93ca7bb48ba9793cd542d29e156e11087e384f02)
+```plaintext
+-Dblank 
+--add-opens java.base/java.lang=ALL-UNNAMED 
+--add-opens java.base/jdk.internal.loader=ALL-UNNAMED 
+--add-opens java.base/java.io=ALL-UNNAMED 
+--add-opens java.desktop/java.beans=ALL-UNNAMED 
+--add-opens java.desktop/com.sun.beans=ALL-UNNAMED 
+--add-opens java.desktop/com.sun.beans.introspect=ALL-UNNAMED 
+--add-opens java.desktop/com.sun.beans.util=ALL-UNNAMED 
+--add-opens java.base/sun.security.action=ALL-UNNAMED 
+--add-opens java.base/java.lang.reflect=ALL-UNNAMED
+```
+
 ## Reproduction Steps
 
 1. **Add Hotswap Agent Core**
