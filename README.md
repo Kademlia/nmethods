@@ -15,7 +15,8 @@ Running G1GC with low codecache size and only one thread to make debug-logs clea
 -Xmx512M
 -XX:ReservedCodeCacheSize=12m 
 -XX:ParallelGCThreads=1 
--XX:ConcGCThreads=1-XX:-SegmentedCodeCache 
+-XX:ConcGCThreads=1
+-XX:-SegmentedCodeCache 
 ```
 
 Debug logs & more agressive sweeping
