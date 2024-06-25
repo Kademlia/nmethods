@@ -41,3 +41,14 @@ CodeCache: size=12288Kb used=11597Kb max_used=11935Kb free=690Kb
  full_count=1
 OpenJDK 64-Bit Server VM warning: Initialization of C1 CompilerThread4 thread failed (no space to run compilers)
 ```
+
+## Yourkit CodeCache inspection
+
+**G1GC unable to work with 12MB Code Cache with frequent calls to System.gc()**
+![Local Image](./images/g1.png)
+
+**SerialGC able to work with 8MB Code Cache with frequent calls to System.gc()**
+![Local Image](./images/serial.png)
+
+**Console log of emergency codecache messages and failure caused by hotswapping the same file again**
+![Local Image](./images/g1notshrinking.png)
